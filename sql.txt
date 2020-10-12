@@ -55,7 +55,7 @@ SELECT district, round(avg(population)) AS average, COUNT(*) AS 'count' from cit
 	group BY district
 	HAVING COUNT(*) >=3
 	ORDER BY AVG(population) desc
-	LIMIT 5; #round() 를통해 소숫점 제거
+	LIMIT 5; #round() 를통해 소숫점 제거, 	HAVING COUNT(*) >=3로 COUNT(*)가 3개이상인 것 만 표시
 SELECT country.Name , round(avg(city.population)) AS average,
 	COUNT(*) AS 'count' from city
 	JOIN country ON city.countrycode = country.code
