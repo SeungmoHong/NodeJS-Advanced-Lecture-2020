@@ -10,8 +10,8 @@ module.exports = {
             user:   config.user,
             password:   config.password,
             database:   config.database,
-            port:   config.port,
-            dateStrings : 'date'
+            port:   config.port
+            // dateStrings : 'date' 날짜타입 변경가능
         });
         conn.connect(function(error) {
             if (error) 
@@ -21,7 +21,7 @@ module.exports = {
     },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * from girl_group ORDER BY ggid DESC LIMIT 5`;
+        let sql = `SELECT ggid,NAME,DATE_FORMAT(debut, '%Y-%m-%d')as debut from girl_group ORDER BY ggid DESC LIMIT 5`;
         conn.query(sql, (error, rows, fields) => {
             if (error)
                 console.log(error);

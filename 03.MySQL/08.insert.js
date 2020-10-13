@@ -11,7 +11,7 @@ let connection = mysql.createConnection({
 })
 connection.connect();
 
-let sql = `insert into song(title, lyrics) values('dynamite','I came to')`;
+let sql = `insert into song(title, lyrics) values('dynamite','I came toasasdasdas')`;
 connection.query(sql, function(error, fields){
     if(error)
         console.log(error);
