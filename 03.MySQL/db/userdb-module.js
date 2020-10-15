@@ -1,6 +1,5 @@
 const fs = require('fs');
 const mysql = require('mysql');
-const crypto = require('crypto');
 let info = fs.readFileSync('./mysql.json', 'utf8');
 let config = JSON.parse(info);
 
@@ -22,7 +21,7 @@ module.exports = {
     getAllLists:    function(callback) {
         let conn = this.getConnection();
         let sql = `SELECT uid, uname, DATE_FORMAT(regDate, '%Y-%m-%d %T') AS regDate  
-                    from users WHERE isdeleted  =0
+                    from users WHERE isdeleted =0
                     ORDER BY regDate LIMIT 10;`;
         conn.query(sql, (error, rows, fields) => {
             if (error)
@@ -41,9 +40,24 @@ module.exports = {
         });
         conn.end();
     },
-    generateHash: function(something){
-        let shasum = crypto.createHash('sha256');
-        shasum.update(something);
-        return shasum.digest('base64');
+    deleteUser:     function(uid, callback){
+        let conn = this.getConnection();
+        let sql = `update users set isDeleted=1 where uid like ?;`      // isDeleted를 수정하는 방법으로 삭제
+        conn.query(sql,uid, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(); // update,delete,create필요 x
+        });
+        conn.end();
+    },
+    updateUser:     function(params, callback){
+        let conn = this.getConnection();
+        let sql = `update users set pwd=? where uid like ?;`
+        conn.query(sql,params, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(); // update,delete,create필요 x
+        });
+        conn.end();
     }
 }

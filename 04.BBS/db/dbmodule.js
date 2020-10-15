@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mysql = require('mysql');
+const crypto = require('crypto');
 let info = fs.readFileSync('./mysql.json', 'utf8');
 let config = JSON.parse(info);
 
@@ -10,7 +11,8 @@ module.exports = {
             user:   config.user,
             password:   config.password,
             database:   config.database,
-            port:   config.port
+            port:   config.port,
+            dateStrings : 'date'
         });
         conn.connect(function(error) {
             if (error) 
@@ -18,9 +20,36 @@ module.exports = {
         });
         return conn;
     },
+    generateHash:   function(something) {
+        // SHA: Secure Hash Algorithm
+        let shasum = crypto.createHash('sha256');   // sha256, sha512
+        shasum.update(something);
+        return shasum.digest('base64');  // hex, base64
+    },
+    isLoggedIn:     function(req, res, next) {
+        if (!req.session.uid) {    
+            res.redirect('/login');
+        } else {
+            next();
+        }
+    },
+    getUserInfo:    function(uid, callback){
+        let conn = this.getConnection();
+        let sql = `select * from users where uid like ?;`
+        conn.query(sql,uid, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(results[0]);   //주의할 것
+        });
+        conn.end();
+    },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * FROM song ORDER BY sid DESC LIMIT 5;`;
+        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime, r.viewCount,l.uname AS uname
+        FROM users AS l 
+        INNER JOIN bbs AS r
+        ON l.uid = r.uid
+        WHERE  r.isDeleted = 0`;
         conn.query(sql, (error, rows, fields) => {
             if (error)
                 console.log(error);
@@ -28,22 +57,8 @@ module.exports = {
         });
         conn.end();
     },
-    getJoinLists:    function(callback) {
-        let conn = this.getConnection();
-        let sql = `SELECT song.sid, song.title, gg.NAME, song.lyrics FROM song 
-        left JOIN girl_group AS gg
-        ON song.sid = gg.hit_song_id
-        ORDER BY song.sid DESC
-        limit 10;`;
-        conn.query(sql, (error, rows, fields) => {
-            if (error)
-                console.log(error);
-            callback(rows);
-        });
-        conn.end();
-    },
-    insertSong:     function(params,callback){
-        let sql = `insert into song(title, lyrics) values(?, ?);`;
+    insertUid:     function(params,callback){
+        let sql = `INSERT INTO users(uid,pwd,uname) values(?,?,?);`;
         let conn = this.getConnection();
         conn.query(sql, params, function(error, fields) {
             if (error)
@@ -52,28 +67,19 @@ module.exports = {
         });
         conn.end();
     },
-    deleteSong:     function(sid,callback){
-        let sql = `delete from song where sid=?;`;
+    getAllContent:    function(callback) {
         let conn = this.getConnection();
-        conn.query(sql, sid, function(error, fields) {
+        let sql = `select * from bbs
+        WHERE isDeleted = 0`;
+        conn.query(sql, (error, rows, fields) => {
             if (error)
                 console.log(error);
-            callback();
+            callback(rows);
         });
         conn.end();
     },
-    getSong:    function(sid, callback){
-        let sql=`select * from song where sid=?;`;
-        let conn = this.getConnection();
-        conn.query(sql, sid, function(error, rows, fields) {
-            if (error)
-                console.log(error);
-            callback(rows[0]);      //주의 array
-        });
-        conn.end();
-    },
-    updateSong:     function(params,callback){
-        let sql = `update song set title=?, lyrics=? where sid=?;`;
+    insertBbs:     function(params,callback){
+        let sql = `INSERT INTO bbs(uid,pwd,uname) values(?,?,?);`;
         let conn = this.getConnection();
         conn.query(sql, params, function(error, fields) {
             if (error)
@@ -82,4 +88,5 @@ module.exports = {
         });
         conn.end();
     },
+    
 }
