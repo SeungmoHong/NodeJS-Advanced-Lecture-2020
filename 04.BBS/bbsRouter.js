@@ -16,10 +16,12 @@ bRouter.get('/',dm.isLoggedIn, (req, res) => {
 bRouter.get('/:bid',dm.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     dm.getContent(bid, result => {
-        dm.getReply(bid, replies=>{
-            const view = require('./view/bbsRead');
-            let html = view.bbsReadForm(req.session.uname,result, replies);
-            res.send(html);  
+        dm.insertViewCount(bid,()=>{
+            dm.getReply(bid, replies=>{
+                const view = require('./view/bbsRead');
+                let html = view.bbsReadForm(req.session.uname,result, replies);
+                res.send(html);  
+            });
         });
     });
 });

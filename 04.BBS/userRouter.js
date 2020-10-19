@@ -18,7 +18,7 @@ uRouter.post('/register', (req, res) => {
         let pwdHash = dm.generateHash(pwd);
         let params = [uid,pwdHash,uname];
         dm.insertUid(params, ()=>{
-            res.redirect('/main/bbs')
+            res.redirect('/bbs')
         })
     }else{             //패스워드와 패스워드 확인이 다른경우
         let html= view.alertMsg('패스워드가 일치하지 않습니다.',(`/user/register`));

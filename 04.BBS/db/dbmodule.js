@@ -35,11 +35,12 @@ module.exports = {
     },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount,l.uname AS uname
+        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount as viewCount,l.uname AS uname
         FROM users AS l 
         INNER JOIN bbs AS r
         ON l.uid = r.uid
         WHERE  r.isDeleted = 0
+        GROUP BY bid
         ORDER BY modTime desc
 	    limit 10`;
         conn.query(sql, (error, rows, fields) => {
@@ -137,6 +138,16 @@ module.exports = {
             if (error)
                 console.log(error);
             callback(rows[0]);      //주의 array
+        });
+        conn.end();
+    },
+    insertViewCount:    function(bid, callback){
+        let sql=`update bbs set viewCount=viewCount+1 where bid=?;`;
+        let conn = this.getConnection();
+        conn.query(sql, bid, function(error, fields) {
+            if (error)
+                console.log(error);
+            callback(); 
         });
         conn.end();
     },
