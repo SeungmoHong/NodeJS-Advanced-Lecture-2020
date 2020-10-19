@@ -29,33 +29,39 @@
             <i class="fas fa-cloud-sun"></i> 20&deg;C
         </div>
     </nav>
-    <li class="media mt-4" id="comment-{{id}}">
-        <img src="https://api.adorable.io/avatars/64/{{author}}.png" class="mr-3" alt="avata">
-        <div class="media-body">
-          <!-- 댓글 -->
-          <h5 class="mt-0 mb-1">{{author}}
-            <small>
-              <!-- 부트스트랩 collapse 활용, https://getbootstrap.com/docs/4.5/components/collapse/ -->
-              <a href="#" class="comment-edit-btn" data-toggle="collapse" data-target=".multi-collapse-{{id}}">수정</a>
-            </small>
-          </h5>
-          <!-- 보기 모드 -->
-          <p class="collapse multi-collapse-{{id}} show">{{content}}</p>
-          <!-- 수정 모드 -->
-          <form class="collapse multi-collapse-{{id}}">
-            <div class="form-group">
-              <textarea class="form-control" id="comment-content" rows="3">{{content}}</textarea>
-            </div>
-            <input type="hidden" id="comment-id" value="{{id}}">
-            <input type="hidden" id="comment-author" value="{{author}}">
-            <button type="button" class="btn btn-info comment-update-btn">수정 완료</button>
-          </form>
+    <div class="container" style="margin-top: 90px;">  
+        <div class="container" role="main">
+
+			<h2>글 쓰기</h2>
+
+			<form name="form" id="form" role="form" method="post" action="/main/insert">
+
+				<div class="mb-3">
+					<label for="title">제목</label>
+					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+				</div>
+				<div class="mb-6">
+
+					<label for="content">내용</label>
+
+					<textarea class="form-control" rows="5" name="content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+
+                    <button type="submit" class="btn btn-sm btn-primary" value="저장"></button>
+				</div>
+			</form>
         </div>
-      </li>
-    
-    <div class="container">
-        <div class="commentList"></div>
-    </div>
+        <div class="container">
+            <label for="content">댓글</label>
+            <form name="commentInsertForm">
+                <div class="input-group">
+                   <input type="hidden" name="bno" value="${detail.bno}"/>
+                   <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+                   <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+                   </span>
+                  </div>
+            </form>
+        </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-bottom">
         <span class="navbar-text">
             Copyright &copy; 2020 Hoseo Institute of Big Data

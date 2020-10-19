@@ -1,14 +1,13 @@
 const template = require('./template');
 
-module.exports.bbsForm = function (uname,rows) {
+module.exports.usersForm = function (uname,rows) {
     let tableRow = '';
     for (let row of rows) {
-        tableRow += `<tr onClick = " location.href='/bbs/${row.bid}'">
-                        <td>${row.bid}</td>
-                        <td>${row.title}</td>
+        tableRow += `<tr>
                         <td>${row.uid}</td>
-                        <td>${row.modTime}</td>
-                        <td>${row.viewCount}</td>
+                        <td>${row.uname}</td>
+                        <td>${row.tel}</td>
+                        <td>${row.email}</td>
                         <td>
                         </td></a>
                     </tr>`;
@@ -18,15 +17,14 @@ module.exports.bbsForm = function (uname,rows) {
         ${template.nav(uname)}
         <div class="container" style="margin-top: 90px;">  
         <div class="container">
-            <h2>게시판</h2>          
+            <h2>사용자 리스트</h2>          
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>날짜</th>
-                    <th>조회수</th>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>Tel</th>
+                    <th>Email</th>
                 </tr>    
                 </thead>    
                     ${tableRow}

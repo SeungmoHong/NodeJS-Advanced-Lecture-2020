@@ -22,7 +22,7 @@ app.use(session({
     store: new FileStore({logFn: function(){}})
 }));
 app.use('/user', uRouter);
-app.use('/main', bRouter);
+app.use('/bbs', bRouter);
 
 app.get('/login',(req, res) => {
     const view = require('./view/index');
@@ -40,8 +40,12 @@ app.post('/login',(req, res)=>{
             res.send(html)
         }else{ 
             if(result.pwd === pwdHash){
+                req.session.uid = uid;
+                req.session.uname = result.uname;
                 console.log('Login 성공')
-                res.redirect('/main/bbs')
+                req.session.save(function(){
+                    res.redirect('/bbs');
+                });
             }else{
                 const view = require('./view/alertMsg');
                 let html= view.alertMsg('Login 실패: 패스워드가 다릅니다',('/login'))
@@ -50,10 +54,40 @@ app.post('/login',(req, res)=>{
         }
     });
 });
+
+
+
+app.get('/insert',dm.isLoggedIn, (req, res) => {
+    const view = require('./view/insertBbs');
+    let html = view.insertBbs(req.session.uname);
+    res.send(html);
+});
+app.post('/insert', (req, res) => {
+    uid = req.session.uid
+    let title = req.body.title;
+    let content = req.body.content;
+    let params = [uid, title, content];
+    dm.insertBbs(params, ()=>{
+        res.redirect('/bbs');
+    console.log(params);
+    });
+});
+
+
+app.get('/users',dm.isLoggedIn, (req, res) => {
+    dm.getAllusers(rows => {
+        const view = require('./view/usersBbs');
+        let html = view.usersForm(req.session.uname,rows);
+        res.send(html); 
+    });
+});
+
 app.get('/logout',(req,res)=>{
     req.session.destroy();
     res.redirect('/login');
 });
+
+
 
 
 app.listen(3000, () => {
