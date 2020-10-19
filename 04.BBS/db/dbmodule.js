@@ -35,7 +35,7 @@ module.exports = {
     },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount as viewCount,l.uname AS uname
+        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount as viewCount,l.uname AS uname,r.replyCount AS replyCount
         FROM users AS l 
         INNER JOIN bbs AS r
         ON l.uid = r.uid
@@ -148,6 +148,16 @@ module.exports = {
             if (error)
                 console.log(error);
             callback(); 
+        });
+        conn.end();
+    },
+    increaseReplyCount:  function(bid, callback) {
+        let conn = this.getConnection();
+        let sql = `update bbs set replyCount=replyCount+1 where bid=?;`;
+        conn.query(sql, bid, (error, fields) => {
+            if (error)
+                console.log(error);
+            callback();
         });
         conn.end();
     },

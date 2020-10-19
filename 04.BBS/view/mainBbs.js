@@ -5,7 +5,7 @@ module.exports.bbsForm = function (uname,rows) {
     for (let row of rows) {
         tableRow += `<tr onClick = " location.href='/bbs/${row.bid}'">
                         <td>${row.bid}</td>
-                        <td>${row.title}</td>
+                        <td>${row.title}(${row.replyCount})</td>
                         <td>${row.uid}</td>
                         <td>${row.modTime}</td>
                         <td>${row.viewCount}</td>

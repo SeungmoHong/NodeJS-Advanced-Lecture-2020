@@ -32,7 +32,9 @@ bRouter.post('/reply',dm.isLoggedIn, (req, res) => {
     let isMine = (uid === req.body.uid) ? 1 : 0;
     let params = [bid,uid,rep,isMine];
     dm.insertReply(params, ()=>{
-        res.redirect(`/bbs/${bid}`);
+        dm.increaseReplyCount(bid, () => {
+            res.redirect(`/bbs/${bid}`);
+        });
     console.log(params);
     });
 });
