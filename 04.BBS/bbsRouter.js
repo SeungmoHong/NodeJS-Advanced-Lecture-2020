@@ -42,7 +42,7 @@ bRouter.get('/delete/:bid/:uid',dm.isLoggedIn,(req,res)=>{
     let bid = req.params.bid;
     let uid = req.params.uid;
     if(uid === req.session.uid){
-        dm.deleteBbs(uid, ()=>{
+        dm.deleteBbs(bid, ()=>{
             res.redirect('/bbs')
         });
     }else{
@@ -53,7 +53,6 @@ bRouter.get('/delete/:bid/:uid',dm.isLoggedIn,(req,res)=>{
 });
 bRouter.get('/update/:bid/:uid',dm.isLoggedIn,(req,res)=>{
     let bid = req.params.bid;
-    let uid = req.params.uid;
     if(req.params.uid===req.session.uid){
         dm.getBbs(bid, (result) =>{
             const view = require('./view/bbsUpdate');

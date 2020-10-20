@@ -73,7 +73,7 @@ module.exports = {
     },
     getContent:    function(bid,callback) {
         let conn = this.getConnection();
-        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.content AS content,r.title AS title, r.modTime, r.viewCount,l.uname AS uname
+        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.content AS content,r.title AS title, r.modTime, r.viewCount,l.uname AS uname,r.replyCount as replyCount
         FROM users AS l 
         INNER JOIN bbs AS r
         ON l.uid = r.uid
@@ -87,13 +87,13 @@ module.exports = {
     },
     getReply:    function(bid,callback) {
         let conn = this.getConnection();
-        let sql = `SELECT l.rid, l.bid, l.uid, r.uname, l.content as rep, l.isMine,
+        let sql = `SELECT l.rid, l.bid, l.uid, r.uname, l.content as rep, l.isMine as isMine,
         l.regTime as regTime
         FROM reply AS l
         JOIN users AS r
         ON r.uid = l.uid
         WHERE r.isDeleted = 0 and l.bid=?
-        ORDER BY l.regTime desc;`;
+        ORDER BY l.regTime;`;
         conn.query(sql, bid, function(error,rows, fields) {
             if (error)
                 console.log(error);
@@ -162,7 +162,7 @@ module.exports = {
         conn.end();
     },
     deleteBbs:     function(bid,callback){
-        let sql = `update bbs set isDeleted=1 where bid=?;`;
+        let sql = `update bbs set isDeleted=1 where bid like ?;`;
         let conn = this.getConnection();
         conn.query(sql, bid, function(error, fields) {
             if (error)

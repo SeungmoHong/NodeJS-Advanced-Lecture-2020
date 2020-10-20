@@ -24,6 +24,9 @@ app.use(session({
 app.use('/user', uRouter);
 app.use('/bbs', bRouter);
 
+app.get('/',(req, res) => {
+    res.redirect('/login')
+});
 app.get('/login',(req, res) => {
     const view = require('./view/index');
     let html = view.loginForm();

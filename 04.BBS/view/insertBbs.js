@@ -14,9 +14,9 @@ module.exports.insertBbs = function (uname) {
             <label for="title">제목</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
         </div>
-        <div class="mb-6">
+        <div class="form-group green-border-focus">
             <label for="content">내용</label>
-            <textarea class="form-control" rows="5" name="content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+            <textarea class="form-control" rows="10" name="content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
             <div class="col-5"></div>
             <button type="submit" class="btn btn-sm btn-primary float-right">저장</button>
         </div>

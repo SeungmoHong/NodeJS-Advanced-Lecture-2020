@@ -28,5 +28,8 @@ uRouter.post('/register', (req, res) => {
         res.send(html);
     }
 });
+uRouter.get('/update/:bid',dm.isLoggedIn,(req,res)=>{
+    
+})
 
 module.exports = uRouter;

@@ -1,8 +1,8 @@
 const template = require('./template');
 
-module.exports.searchForm = function (uname,data) {
+module.exports.searchForm = function (uname,rows) {
     let tableRow = '';
-    for (let row of data) {
+    for (let row of rows) {
         tableRow += `<tr onClick = " location.href='/bbs/${row.bid}'">
                         <td>${row.bid}</td>
                         <td>${row.title}(${row.replyCount})</td>

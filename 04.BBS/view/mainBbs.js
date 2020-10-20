@@ -3,6 +3,7 @@ const template = require('./template');
 module.exports.bbsForm = function (uname,rows) {
     let tableRow = '';
     for (let row of rows) {
+
         tableRow += `<tr onClick = " location.href='/bbs/${row.bid}'">
                         <td>${row.bid}</td>
                         <td>${row.title}(${row.replyCount})</td>
@@ -19,7 +20,7 @@ module.exports.bbsForm = function (uname,rows) {
         <div class="container" style="margin-top: 90px;">  
         <div class="container">
             <h2>게시판</h2>          
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>번호</th>
