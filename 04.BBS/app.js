@@ -77,13 +77,7 @@ app.post('/insert', (req, res) => {
 });
 
 
-app.get('/users',dm.isLoggedIn, (req, res) => {
-    dm.getAllusers(rows => {
-        const view = require('./view/usersBbs');
-        let html = view.usersForm(req.session.uname,rows);
-        res.send(html); 
-    });
-});
+
 
 app.get('/logout',(req,res)=>{
     req.session.destroy();
