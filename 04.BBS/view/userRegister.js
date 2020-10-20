@@ -18,6 +18,14 @@ module.exports.register = function () {
                         <td><input type="text" name="uid" id="uid"></td>
                     </tr>
                     <tr>
+                        <td><label for="tel">전화번호</label></td>
+                        <td><input type="text" name="tel" id="tel"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">이메일</label></td>
+                        <td><input type="text" name="email" id="email"></td>
+                    </tr>
+                    <tr>
                         <td><label for="pwd">패스워드</label></td>
                         <td><input type="password" name="pwd" id="pwd"></td>
                     </tr>

@@ -63,7 +63,7 @@ module.exports = {
     
     insertUid:     function(params,callback){
         let conn = this.getConnection();
-        let sql = `INSERT INTO users(uid,pwd,uname) values(?,?,?);`;
+        let sql = `INSERT INTO users(uid,tel,email,pwd,uname) values(?,?,?,?,?);`;
         conn.query(sql, params, function(error, fields) {
             if (error)
                 console.log(error);
@@ -88,7 +88,7 @@ module.exports = {
     getReply:    function(bid,callback) {
         let conn = this.getConnection();
         let sql = `SELECT l.rid, l.bid, l.uid, r.uname, l.content as rep, l.isMine,
-        DATE_FORMAT(l.regTime, '%Y-%m-%d') as regTime
+        l.regTime as regTime
         FROM reply AS l
         JOIN users AS r
         ON r.uid = l.uid
@@ -179,6 +179,23 @@ module.exports = {
             if (error)
                 console.log(error);
             callback();
+        });
+        conn.end();
+    },
+    searchTitle:    function(searched,callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount as viewCount,l.uname AS uname,r.replyCount AS replyCount
+        FROM users AS l 
+        INNER JOIN bbs AS r
+        ON l.uid = r.uid
+        WHERE  r.isDeleted = 0 and r.title LIKE ?
+        ORDER BY modTime desc
+	    limit 10
+	   `;
+        conn.query(sql, searched, (error, rows, fields) => {
+            if (error)
+                console.log(error);
+            callback(rows);
         });
         conn.end();
     },

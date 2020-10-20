@@ -1,6 +1,6 @@
 const template = require('./template');
 
-module.exports.insertBbs = function (uname,rows) {
+module.exports.insertBbs = function (uname) {
 	return `
         ${template.header()}
         ${template.nav(uname)}

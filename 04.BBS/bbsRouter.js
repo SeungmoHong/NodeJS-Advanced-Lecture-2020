@@ -75,6 +75,14 @@ bRouter.post('/update',dm.isLoggedIn, (req,res)=>{
         res.redirect(`/bbs/${bid}`)
     });
 })
-
+bRouter.post('/search',dm.isLoggedIn,(req,res)=>{
+    let searched ='%'+req.body.searched+'%';
+    console.log(searched);
+    dm.searchTitle(searched,rows => {
+        const view = require('./view/searchBbs');
+        let html = view.searchForm(req.session.uname,rows);
+        res.send(html);
+    })
+})
 
 module.exports = bRouter;

@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <div class="row">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" href="/">
             <img src="/img/hs.jpg" alt="호서직업능력개발원"
@@ -24,9 +25,17 @@
                 <a class="nav-link" href="/logout">로그아웃</a>
             </li>
         </ul>
+        
+        <div class="input-group col-3">
+          <input type="text" class="form-control" >
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">찾기</button>
+          </span>
+        </div>
         <div class="navbar-text fixed-right" id="weather">
             홍길동님 반갑습니다.&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-cloud-sun"></i> 20&deg;C
+        </div>
         </div>
     </nav>
     <li class="media mt-4" id="comment-{{id}}">

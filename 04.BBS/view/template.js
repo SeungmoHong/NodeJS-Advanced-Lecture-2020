@@ -20,10 +20,11 @@ module.exports = {
     },
     nav :   function(uname){
         return`
+        <div class="row">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" href="/bbs">
             <img src="/img/hs.jpg" alt="호서직업능력개발원"
-                style="height: 40px; margin-left: 50px; margin-right: 100px;">
+                style="height: 40px; margin-left: 30px; margin-right: 30px;">
         </a>
         <ul class="nav mr-auto">
             <li class="nav-item">
@@ -39,11 +40,22 @@ module.exports = {
                 <a class="nav-link" href="/logout">로그아웃</a>
             </li>
         </ul>
+        <div class="input-group col-3">
+        <form action="/bbs/search" method="post">
+            <div class="input-group">
+            <input type="search" name="searched" id="searched" class="form-control" placeholder="제목을 검색하세요.">
+            <div class="input-group-append">
+            <button class="btn btn-success" type="submit">검색</button>
+            </div>
+            </div>
+            </form>
+        </div>
         <div class="navbar-text fixed-right" id="weather">
             ${uname}님 반갑습니다.&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-cloud-sun"></i> 20&deg;C
         </div>
         </nav>
+        </div>
         `
     },
     footer:     function() {
