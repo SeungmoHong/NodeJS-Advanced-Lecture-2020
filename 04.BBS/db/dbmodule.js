@@ -34,20 +34,29 @@ module.exports = {
             next();
         }
     },
-    getAllLists:    function(callback) {
+    getAllLists:    function(offset,callback) {
         let conn = this.getConnection();
         let sql = `SELECT  r.bid AS bid, l.uid AS uid, r.title AS title, r.modTime AS modTime, r.viewCount as viewCount,l.uname AS uname,r.replyCount AS replyCount
         FROM users AS l 
         INNER JOIN bbs AS r
         ON l.uid = r.uid
         WHERE  r.isDeleted = 0
-        GROUP BY bid
-        ORDER BY modTime desc
-	    limit 10`;
-        conn.query(sql, (error, rows, fields) => {
+        ORDER BY r.bid DESC
+	    limit 10 offset ?`;
+        conn.query(sql,offset, (error, rows, fields) => {
             if (error)
                 console.log(error);
             callback(rows);
+        });
+        conn.end();
+    },
+    getBbsTotalCount:     function(callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT count(*) as count FROM bbs where isDeleted=0;`;
+        conn.query(sql, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(results[0]);   // 주의할 것
         });
         conn.end();
     },

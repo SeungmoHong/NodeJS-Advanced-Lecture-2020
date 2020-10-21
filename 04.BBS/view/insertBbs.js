@@ -9,7 +9,7 @@ module.exports.insertBbs = function (uname) {
     <h2>글 쓰기</h2>
     <hr>
         </div>
-        <form name="form" id="form" role="form" method="post" action="/insert">
+        <form name="form" id="form" role="form" method="post" action="/bbs/new/insert">
         <div class="mb-3">
             <label for="title">제목</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">

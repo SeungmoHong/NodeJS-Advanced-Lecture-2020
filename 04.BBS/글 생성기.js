@@ -12,7 +12,7 @@ let conn = mysql.createConnection({
 
 
 let sql = `insert into bbs(uid, title, content) values(?,?,?)`;
-let params = ['admin','테스트', '내용내용내용내용내용내용']
+let params = ['admin','테스트', '내용내용내용내용내용내용'],
 conn.query(sql,params, function(error, fields){
     if(error)
         console.log(error);

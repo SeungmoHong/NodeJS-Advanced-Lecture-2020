@@ -48,7 +48,7 @@ app.post('/login',(req, res)=>{
                 req.session.uname = result.uname;
                 console.log('Login 성공')
                 req.session.save(function(){
-                    res.redirect('/bbs');
+                    res.redirect('/bbs/list/1');
                 });
             }else{
                 const view = require('./view/alertMsg');
@@ -58,85 +58,6 @@ app.post('/login',(req, res)=>{
         }
     });
 });
-
-
-
-app.get('/insert',dm.isLoggedIn, (req, res) => {
-    const view = require('./view/insertBbs');
-    let html = view.insertBbs(req.session.uname);
-    res.send(html);
-});
-app.post('/insert', (req, res) => {
-    uid = req.session.uid
-    let title = req.body.title;
-    let content = req.body.content;
-    let params = [uid, title, content];
-    dm.insertBbs(params, ()=>{
-        res.redirect('/bbs');
-    console.log(params);
-    });
-});
-app.get('/users',dm.isLoggedIn, (req, res) => {
-    if(req.session.uid==='admin'){
-        dm.getAllusers(rows => {
-            const view = require('./view/usersBbs');
-            let html = view.usersForm(req.session.uname,rows);
-            res.send(html); 
-        });
-    }else{
-        let uid = req.session.uid
-        dm.getUserInfo(uid, result => {
-            const view = require('./view/userImfo');
-            let html = view.usersImfoForm(req.session.uname,result);
-            res.send(html); 
-        });
-    }
-});
-app.get('/users/admindelete/:uid',dm.isLoggedIn,(req,res)=>{
-    let uid = req.params.uid;
-    dm.getUserInfo(uid, ()=>{
-        dm.deleteUser(uid,()=>{
-            res.redirect('/users')
-        })
-    })
-});
-app.get('/users/update/:uid',dm.isLoggedIn,(req,res)=>{
-    let uid = req.session.uid
-    dm.getUserInfo(uid, (result)=>{
-        const view = require('./view/userUpdate');
-        let html = view.userUpdateForm(req.session.uname,result);
-        res.send(html);
-    })
-});
-app.post('/users/update',dm.isLoggedIn,(req,res)=>{
-    let uid = req.session.uid;
-    let uname = req.body.uname;
-    let tel = req.body.tel;
-    let email = req.body.email
-    let pwd = req.body.pwd;
-    let pwd2 = req.body.pwd2;
-    if (pwd === pwd2){      // 패스워드와 패스워드 확인이 일치
-        let pwdHash = dm.generateHash(pwd);
-        let params = [uname,tel,email,pwdHash,uid];
-        dm.updateUser(params, ()=>{
-            let html= view.alertMsg('회원정보 수정이 완료되었습니다.',('/bbs'));
-        res.send(html);
-        })
-    }else{             //패스워드와 패스워드 확인이 다른경우
-        let html= view.alertMsg('패스워드가 일치하지 않습니다.',(`/users/update/${uid}`));
-        res.send(html);
-    } 
-})
-app.get('/users/delete/:uid',dm.isLoggedIn,(req,res)=>{
-    let uid = req.session.uid
-    dm.getUserInfo(uid, ()=>{
-        dm.deleteUser(uid,()=>{
-            let html= view.alertMsg('아이디가 삭제되었습니다. 이용해주셔서 감사합니다.',('/login')); 
-            res.send(html);
-        })
-    })
-});
-
 
 
 app.get('/logout',(req,res)=>{

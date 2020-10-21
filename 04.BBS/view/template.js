@@ -22,19 +22,19 @@ module.exports = {
         return`
         <div class="row">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="/bbs" data-toggle="tooltip" title="홈">
+        <a class="navbar-brand" href="/bbs/list/1" data-toggle="tooltip" title="홈">
             <img src="/img/hshs.png" alt="호서직업능력개발원"
                 style="witdth: 40px; margin-left: 20px; margin-right: 20px;">
         </a>
         <ul class="nav mr-auto ">
             <li class="nav-item">
-                <a class="nav-link" href="/bbs" data-toggle="tooltip" title="홈"><i class="fas fa-home fa-2x"></i></a>
+                <a class="nav-link" href="/bbs/list/1" data-toggle="tooltip" title="홈"><i class="fas fa-home fa-2x"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/insert" data-toggle="tooltip" title="글 쓰기"><i class="far fa-edit fa-2x"></i></a>
+                <a class="nav-link" href="/bbs/new/insert" data-toggle="tooltip" title="글 쓰기"><i class="far fa-edit fa-2x"></i></a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="/users"><i class="fas fa-user-friends fa-2x" data-toggle="tooltip" title="사용자 정보"></i></a>
+            <a class="nav-link" href="/user"><i class="fas fa-user-friends fa-2x" data-toggle="tooltip" title="사용자 정보"></i></a>
             </li>
         </ul>
         <div class="input-group col-3">

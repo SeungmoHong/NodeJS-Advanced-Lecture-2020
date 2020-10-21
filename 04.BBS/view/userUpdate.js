@@ -18,7 +18,7 @@ module.exports.userUpdateForm = function (uname, result) {
         </div>
         <div class="col-3"></div>
         <div class="col-6">
-            <form action="/users/update" method="post">
+            <form action="/user/update" method="post">
                 <table class="table table-borderless">
                     <tr>
                         <td><label for="uname">이름</label></td>

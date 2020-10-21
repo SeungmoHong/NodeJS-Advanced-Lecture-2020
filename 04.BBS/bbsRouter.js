@@ -6,11 +6,20 @@ const dm = require('./db/dbmodule');
 const FileStore = require('session-file-store')(session);
 const view = require('./view/alertMsg');
 
-bRouter.get('/',dm.isLoggedIn, (req, res) => {
-    dm.getAllLists(rows => {
-        const view = require('./view/mainBbs');
-        let html = view.bbsForm(req.session.uname,rows);
-        res.send(html); 
+bRouter.get('/list/:page',dm.isLoggedIn, (req, res) => {
+    let page = parseInt(req.params.page);
+    req.session.currentPage = page;
+    let offset = (page - 1) * 10;
+    dm.getBbsTotalCount(result => {
+        let totalPage = Math.ceil(result.count / 10);
+        let startPage = Math.floor((page-1)/10)*10 + 1;
+        let endPage = Math.ceil(page/10)*10;
+        endPage = (endPage > totalPage) ? totalPage : endPage;
+        dm.getAllLists(offset, rows=>{
+            const view = require('./view/mainBbs');
+            let html = view.bbsForm(req.session.uname,rows, page, startPage, endPage, totalPage);
+            res.send(html); 
+        });
     });
 });
 bRouter.get('/:bid',dm.isLoggedIn, (req, res) => {
@@ -23,6 +32,21 @@ bRouter.get('/:bid',dm.isLoggedIn, (req, res) => {
                 res.send(html);  
             });
         });
+    });
+});
+bRouter.get('/new/insert',dm.isLoggedIn, (req, res) => {
+    const view = require('./view/insertBbs');
+    let html = view.insertBbs(req.session.uname);
+    res.send(html);
+});
+bRouter.post('/new/insert', (req, res) => {
+    uid = req.session.uid
+    let title = req.body.title;
+    let content = req.body.content;
+    let params = [uid, title, content];
+    dm.insertBbs(params, ()=>{
+        res.redirect('/bbs/list/1');
+    console.log(params);
     });
 });
 bRouter.post('/reply',dm.isLoggedIn, (req, res) => {
@@ -76,7 +100,6 @@ bRouter.post('/update',dm.isLoggedIn, (req,res)=>{
 })
 bRouter.post('/search',dm.isLoggedIn,(req,res)=>{
     let searched ='%'+req.body.searched+'%';
-    console.log(searched);
     dm.searchTitle(searched,rows => {
         const view = require('./view/searchBbs');
         let html = view.searchForm(req.session.uname,rows);
