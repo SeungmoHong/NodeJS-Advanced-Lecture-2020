@@ -6,8 +6,8 @@ module.exports.bbsReadForm = function (uname, result, replies) {
         if(reply.isMine === 1){
             tableRow += `
             <div class="row mt-3" >
-            <div class="col-7"></div>
-            <div class="card bg-primary text-white col-5">
+            <div class="col-9"></div>
+            <div class="card bg-primary text-white col-3">
                 <div class="card-body">
                 ${reply.uname} ${reply.regTime}
                 <br>
@@ -19,9 +19,8 @@ module.exports.bbsReadForm = function (uname, result, replies) {
         }else{
             tableRow += `
             <div class="row mt-3">
-            <div class="col-1"></div>
-            <div class="card bg-secondary text-white col-5">
-            <div class="col-7"></div>
+            <div class="card bg-secondary text-white col-3">
+            <div class="col-9"></div>
                 <div class="card-body">
                 ${reply.uname} ${reply.regTime}
                 <br>

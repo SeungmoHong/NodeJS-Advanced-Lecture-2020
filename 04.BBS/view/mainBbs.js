@@ -10,8 +10,6 @@ module.exports.bbsForm = function (uname,rows) {
                         <td>${row.uname}</td>
                         <td>${displayTime}</td>
                         <td>${row.viewCount}</td>
-                        <td>
-                        </td></a>
                     </tr>`;
     }
 	return `
