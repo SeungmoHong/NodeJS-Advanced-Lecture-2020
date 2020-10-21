@@ -9,9 +9,8 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             <div class="col-7"></div>
             <div class="card bg-primary text-white col-5">
                 <div class="card-body">
-                <h5>
-                ${reply.uname}
-                </h5>
+                ${reply.uname} ${reply.regTime}
+                <br>
                 ${reply.rep}
                 </div>
             </div>
@@ -24,7 +23,7 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             <div class="card bg-secondary text-white col-5">
             <div class="col-7"></div>
                 <div class="card-body">
-                ${reply.uname}
+                ${reply.uname} ${reply.regTime}
                 <br>
                 ${reply.rep}
                 </div>
@@ -43,12 +42,8 @@ module.exports.bbsReadForm = function (uname, result, replies) {
        
             <table class="table">
                 <tr>
-                <td><h3>제목 : ${result.title}</h3></td>
-                <td class ="text-right"><h3>작성자 :${result.uname}</h3></td>
-                </tr>
-                <tr>
-                <td>글번호 : ${result.bid} </td>
-                <td class ="text-right">조회 ${result.viewCount} 리플 ${result.replyCount}</td>
+                <td><h3>제목 : &nbsp; ${result.title}</h3> 글번호 : ${result.bid}</td>
+                <td class ="text-right"><h3>작성자 :  &nbsp;${result.uname}</h3>조회 ${result.viewCount} 리플 ${result.replyCount}</td>
                 </tr>
             </table>
             <table class="table table-bordered">

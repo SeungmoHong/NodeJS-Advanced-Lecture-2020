@@ -3,13 +3,7 @@ const view = require('./view/alertMsg');
 const dm = require('./db/dbmodule');
 
 const uRouter = express.Router();
-uRouter.get('/',dm.isLoggedIn, (req, res) => {
-    dm.getAllusers(rows => {
-        const view = require('./view/usersBbs');
-        let html = view.usersForm(req.session.uname,rows);
-        res.send(html); 
-    });
-});
+
 
 uRouter.get('/register', (req, res) => {
     const view = require('./view/userRegister');

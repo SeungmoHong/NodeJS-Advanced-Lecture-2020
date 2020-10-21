@@ -16,10 +16,12 @@ module.exports.bbsUpdateForm = function (uname, result) {
             </div>
             <div class="form-group green-border-focus">
                 <label for="content">내용</label>
-                <input type="text" class="form-control" name="content" id="content" value="${result.content}">
+                <textarea class="form-control" rows="10" name="content" id="content">${result.content}</textarea>
                 <div class="col-5"></div>
                 <br>
-                <button type="submit" class="btn btn-sm btn-primary float-right">수정하기</button>
+                <button type="reset" class="btn btn-sm btn-secondary float-right" onclick="location.href='/bbs/${result.bid}'">취소</button>
+                <button type="submit" class="btn btn-sm btn-primary float-right">수정</button>
+                
             </div>
             </form>
             <div class="col-3"></div>

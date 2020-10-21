@@ -1,14 +1,14 @@
 const template = require('./template');
-
+const dm = require('../db/dbmodule')
 module.exports.bbsForm = function (uname,rows) {
     let tableRow = '';
     for (let row of rows) {
-
+        let displayTime = dm.getDisplayTime(row.modTime);
         tableRow += `<tr onClick = " location.href='/bbs/${row.bid}'">
                         <td>${row.bid}</td>
                         <td>${row.title}(${row.replyCount})</td>
-                        <td>${row.uid}</td>
-                        <td>${row.modTime}</td>
+                        <td>${row.uname}</td>
+                        <td>${displayTime}</td>
                         <td>${row.viewCount}</td>
                         <td>
                         </td></a>

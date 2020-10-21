@@ -15,7 +15,7 @@ module.exports.usersForm = function (uname,rows) {
                         <td>${row.tel}</td>
                         <td>${row.email}</td>
                         <td>
-                        <a href="/user/update/${row.uid}">아이디 수정</a> 
+                        <a href="/users/admindelete/${row.uid}">아이디 삭제</a> 
                         </a>
                         </td>
                     </tr>`;
@@ -33,7 +33,7 @@ module.exports.usersForm = function (uname,rows) {
                     <th>이름</th>
                     <th>Tel</th>
                     <th>Email</th>
-                    <th>기타</th>
+                    <th>액션</th>
                 </tr>    
                 </thead>    
                     ${tableRow}

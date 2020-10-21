@@ -23,8 +23,8 @@ module.exports = {
         <div class="row">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" href="/bbs">
-            <img src="/img/hs.jpg" alt="호서직업능력개발원"
-                style="height: 40px; margin-left: 30px; margin-right: 30px;">
+            <img src="/img/hshs.png" alt="호서직업능력개발원"
+                style="height: 25px; margin-left: 20px; margin-right: 20px;">
         </a>
         <ul class="nav mr-auto">
             <li class="nav-item">

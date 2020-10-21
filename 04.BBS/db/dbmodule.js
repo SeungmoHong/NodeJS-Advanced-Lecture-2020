@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mysql = require('mysql');
 const crypto = require('crypto');
+const moment = require('moment');
 let info = fs.readFileSync('./mysql.json', 'utf8');
 let config = JSON.parse(info);
 
@@ -52,7 +53,7 @@ module.exports = {
     },
     getUserInfo:    function(uid, callback){
         let conn = this.getConnection();
-        let sql = `select * from users where uid like ?;`
+        let sql = `select * from users where uid like ? and isDeleted=0;`
         conn.query(sql,uid, (error, results, fields) => {
             if (error)
                 console.log(error);
@@ -123,7 +124,7 @@ module.exports = {
     },
     getAllusers:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * FROM users`;
+        let sql = `SELECT * FROM users where isDeleted =0`;
         conn.query(sql, (error, rows, fields) => {
             if (error)
                 console.log(error);
@@ -173,7 +174,7 @@ module.exports = {
     },
     
     updateBbs:     function(params,callback){
-        let sql = `update bbs set title=?, content=? where bid=?;`;
+        let sql = `update bbs set title=?, content=?,modTime =now() where bid=?;`;
         let conn = this.getConnection();
         conn.query(sql, params, function(error, fields) {
             if (error)
@@ -199,6 +200,31 @@ module.exports = {
         });
         conn.end();
     },
-
+    updateUser:     function(params,callback){
+        let sql = `update users set uname=?, tel=?, email=?, pwd=? where uid=?;`;
+        let conn = this.getConnection();
+        conn.query(sql, params, function(error, fields) {
+            if (error)
+                console.log(error);
+            callback();
+        });
+        conn.end();
+    },
+    deleteUser:     function(uid,callback){
+        let sql = `update users set isDeleted=1 where uid like ?;`;
+        let conn = this.getConnection();
+        conn.query(sql, uid, function(error, fields) {
+            if (error)
+            console.log(error);
+            callback();
+        });
+        conn.end();
+    },
+    getDisplayTime:     function(dt) {
+        let today = moment().format('YYYY-MM-DD');
+        let dbtime = moment(dt).format('YYYY-MM-DD HH:mm:ss');
+        return (dbtime.indexOf(today) == 0) ?
+            dbtime.substring(11) : dbtime.substring(0,10);
+    }
     
 }
