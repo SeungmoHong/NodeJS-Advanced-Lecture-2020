@@ -37,7 +37,8 @@ module.exports.bbsForm = function (uname,rows,pageNo, startPage, endPage, totalP
         ${template.nav(uname)}
         <div class="container" style="margin-top: 90px;">  
         <div class="container">
-            <h2>게시판</h2>          
+            <h2>게시판</h2>     
+            <br>
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>

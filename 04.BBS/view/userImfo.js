@@ -1,10 +1,10 @@
 const template = require('./template');
 
 module.exports.usersImfoForm = function (uname,result) {
-    if(String(result.tel)==='null'&&' '){
+    if(String(result.tel)===''||String(result.tel)==='null'){
         result.tel = '등록되지 않음'
     }
-    if(String(result.email)==='null'&&' '){
+    if(String(result.email)===''||String(result.email)==='null'){
         result.email = '등록되지 않음'
     }
 	return `

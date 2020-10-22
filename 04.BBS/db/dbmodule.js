@@ -131,13 +131,25 @@ module.exports = {
         });
         conn.end();
     },
-    getAllusers:    function(callback) {
+    getAllusers:    function(offset,callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * FROM users where isDeleted =0`;
-        conn.query(sql, (error, rows, fields) => {
+        let sql = `SELECT * FROM users where isDeleted =0 
+        ORDER BY regDate DESC
+	    limit 10 offset ?`;
+        conn.query(sql,offset, (error, rows, fields) => {
             if (error)
                 console.log(error);
             callback(rows);
+        });
+        conn.end();
+    },
+    getUserTotalCount:     function(callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT count(*) as count FROM users where isDeleted=0;`;
+        conn.query(sql, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(results[0]);   // 주의할 것
         });
         conn.end();
     },
@@ -200,7 +212,6 @@ module.exports = {
         ON l.uid = r.uid
         WHERE  r.isDeleted = 0 and r.title LIKE ?
         ORDER BY modTime desc
-	    limit 10
 	   `;
         conn.query(sql, searched, (error, rows, fields) => {
             if (error)

@@ -7,9 +7,11 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             tableRow += `
             <div class="row mt-3" >
             <div class="col-8"></div>
-            <div class="card bg-primary text-white col-4">
+            <div class="card bg-info text-white col-4">
                 <div class="card-body">
-                ${reply.uname} ${reply.regTime}
+                ${reply.uname}
+                &nbsp; &nbsp;
+                ${reply.regTime}
                 <br>
                 ${reply.rep}
                 </div>
@@ -19,10 +21,12 @@ module.exports.bbsReadForm = function (uname, result, replies) {
         }else{
             tableRow += `
             <div class="row mt-3">
-            <div class="card bg-secondary text-white col-4">
+            <div class="card bg-light text-dark col-4">
             <div class="col-8"></div>
                 <div class="card-body">
-                ${reply.uname} ${reply.regTime}
+                ${reply.uname}
+                &nbsp; &nbsp;
+                ${reply.regTime}
                 <br>
                 ${reply.rep}
                 </div>
@@ -41,7 +45,7 @@ module.exports.bbsReadForm = function (uname, result, replies) {
        
             <table class="table">
                 <tr>
-                <td><h3>제목 : &nbsp; ${result.title}</h3> 글번호 : ${result.bid}</td>
+                <td><h3>제목 : &nbsp; ${result.title}</h3> 글번호 : ${result.bid} | ${result.modTime}</td>
                 <td class ="text-right"><h3>작성자 :  &nbsp;${result.uname}</h3>조회 ${result.viewCount} 리플 ${result.replyCount}</td>
                 </tr>
             </table>
@@ -62,7 +66,7 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             <div class="col-12 mt-5">
                 <input type="hidden" name="bid" value="${result.bid}">
                 <input type="hidden" name="uid" value="${result.uid}">
-                <input type="text" class="form-control" id="rep" placeholder="댓글을 입력하세요." name="rep">
+                <input type="text" class="form-control" id="rep" placeholder="댓글을 입력하세요. (100자이내)" name="rep">
             </div>
             <div class="col-2"  style="margin-bottom: 90px;">
                 <button type="submit" class="btn btn-primary mt-3">남기기</button>

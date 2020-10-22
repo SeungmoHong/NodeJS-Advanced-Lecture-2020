@@ -67,7 +67,7 @@ bRouter.get('/delete/:bid/:uid',dm.isLoggedIn,(req,res)=>{
     let uid = req.params.uid;
     if(uid === req.session.uid){
         dm.deleteBbs(bid, ()=>{
-            res.redirect('/bbs')
+            res.redirect('/bbs/list/1')
         });
     }else{
         let html= view.alertMsg('삭제 권한이 없습니다.',(`/bbs/${bid}`)); 

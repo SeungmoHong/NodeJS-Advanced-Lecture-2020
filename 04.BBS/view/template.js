@@ -34,7 +34,7 @@ module.exports = {
                 <a class="nav-link" href="/bbs/new/insert" data-toggle="tooltip" title="글 쓰기"><i class="far fa-edit fa-2x"></i></a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="/user"><i class="fas fa-user-friends fa-2x" data-toggle="tooltip" title="사용자 정보"></i></a>
+            <a class="nav-link" href="/user/list/1"><i class="fas fa-user-friends fa-2x" data-toggle="tooltip" title="사용자 정보"></i></a>
             </li>
         </ul>
         <div class="input-group col-3">
@@ -47,12 +47,12 @@ module.exports = {
             </div>
             </form>
         </div>
-        <div class="navbar-text fixed-right" id="weather">
+        <div class="navbar-text fixed-right " id="weather">
             ${uname}님 환영합니다.&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <ul class="nav text-right ">
             <li class="nav-item">
-                <a class="nav-link" href="/logout">로그아웃</a>
+                <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-2x"data-toggle="tooltip" title="로그아웃"></i></a>
             </li>
         </ul>
         </nav>
@@ -61,6 +61,7 @@ module.exports = {
     },
     footer:     function() {
         return `
+    <div class="row mt-5" ></div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-bottom">
         <span class="navbar-text">
             Copyright &copy; 2020 Hoseo Institute of Big Data

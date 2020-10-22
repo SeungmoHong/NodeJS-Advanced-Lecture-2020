@@ -7,7 +7,6 @@ const uRouter = require('./userRouter');
 const bRouter = require('./bbsRouter');
 const view = require('./view/alertMsg');
 const dm = require('./db/dbmodule');
-const e = require('express');
 
 const app = express();
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
