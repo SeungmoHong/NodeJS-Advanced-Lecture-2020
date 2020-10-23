@@ -43,7 +43,7 @@ module.exports.userUpdateForm = function (uname, result) {
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <input class="btn btn-primary" type="submit" value="확인">
-                            <input class="btn btn-secondary" type="reset" onclick="location.href='/users'" value="취소">
+                            <input class="btn btn-secondary" type="reset" onclick="location.href='/user/list/1'" value="취소">
                         </td>
                     </tr>
                 </table>

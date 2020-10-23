@@ -15,7 +15,7 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
                         <td>${row.tel}</td>
                         <td>${row.email}</td>
                         <td>
-                        <a href="/user/admindelete/${row.uid}">탈퇴하기</a> 
+                        <a href="/user/adminDel/${row.uid}">탈퇴하기</a> 
                         </a>
                         </td>
                     </tr>`;

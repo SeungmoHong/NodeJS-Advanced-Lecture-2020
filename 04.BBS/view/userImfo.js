@@ -39,7 +39,7 @@ module.exports.usersImfoForm = function (uname,result) {
                 <tr>
                     <td>계정 탈퇴하기</td>
                     <td>
-                    <a href="/user/delete/${result.uid}">탈퇴하기</a>
+                    <a href="/user/userDelete/${result.uid}">탈퇴하기</a>
                     </td>
                 </tr>
             </table>

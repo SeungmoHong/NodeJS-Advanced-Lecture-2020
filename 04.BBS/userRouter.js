@@ -3,7 +3,42 @@ const view = require('./view/alertMsg');
 const dm = require('./db/dbmodule');
 
 const uRouter = express.Router();
+const upload = multer({
+    storage: multer.diskStorage({
+        // set a localstorage destination
+        destination: __dirname + '/../public/upload/',
+        // set a file name
+        filename: (req, file, cb) => {
+            cb(null, new Date().toISOString().replace(/[-:\.A-Z]/g, '') + '_' + file.originalname);
+        }
+    })
+});
 
+uRouter.get('/list/:page',dm.isLoggedIn, (req, res) => {
+    if(req.session.uid==='admin'){
+        let page = parseInt(req.params.page);
+        req.session.currentPage = page;
+        let offset = (page - 1) * 10;
+        dm.getUserTotalCount(result=>{
+            let totalPage = Math.ceil(result.count / 10);
+            let startPage = Math.floor((page-1)/10)*10 + 1;
+            let endPage = Math.ceil(page/10)*10;
+            endPage = (endPage > totalPage) ? totalPage : endPage;
+            dm.getAllusers(offset,rows => {
+                const view = require('./view/usersBbs');
+                let html = view.usersForm(req.session.uname, rows, page, startPage, endPage, totalPage);
+                res.send(html); 
+            });
+        })
+    }else{
+        let uid = req.session.uid
+        dm.getUserInfo(uid, result => {
+            const view = require('./view/userImfo');
+            let html = view.usersImfoForm(req.session.uname,result);
+            res.send(html); 
+        });
+    }
+});
 
 uRouter.get('/register', (req, res) => {
     const view = require('./view/userRegister');
@@ -46,38 +81,38 @@ uRouter.post('/register', (req, res) => {
             res.send(html);
     }
 });
-uRouter.get('/list/:page',dm.isLoggedIn, (req, res) => {
-    if(req.session.uid==='admin'){
-        let page = parseInt(req.params.page);
-        req.session.currentPage = page;
-        let offset = (page - 1) * 10;
-        dm.getUserTotalCount(result=>{
-            let totalPage = Math.ceil(result.count / 10);
-            let startPage = Math.floor((page-1)/10)*10 + 1;
-            let endPage = Math.ceil(page/10)*10;
-            endPage = (endPage > totalPage) ? totalPage : endPage;
-            dm.getAllusers(offset,rows => {
-                const view = require('./view/usersBbs');
-                let html = view.usersForm(req.session.uname, rows, page, startPage, endPage, totalPage);
-                res.send(html); 
-            });
-        })
-    }else{
-        let uid = req.session.uid
-        dm.getUserInfo(uid, result => {
-            const view = require('./view/userImfo');
-            let html = view.usersImfoForm(req.session.uname,result);
-            res.send(html); 
-        });
-    }
+uRouter.get('/adminDel/:uid',dm.isLoggedIn,(req,res)=>{
+    let uid = req.params.uid;
+    dm.getUserInfo(uid, (result)=>{
+        const view = require('./view/userAdminDel');
+        let html = view.userAdminDeleteForm(req.session.uname,result);
+        res.send(html);
+    });
 });
 uRouter.get('/admindelete/:uid',dm.isLoggedIn,(req,res)=>{
     let uid = req.params.uid;
     dm.getUserInfo(uid, ()=>{
         dm.deleteUser(uid,()=>{
             res.redirect('/user/list/1')
-        })
-    })
+        });
+    });
+});
+uRouter.get('/userDelete/:uid',dm.isLoggedIn,(req,res)=>{
+    let uid = req.params.uid;
+    dm.getUserInfo(uid, (result)=>{
+        const view = require('./view/userDel');
+        let html = view.userDeleteForm(req.session.uname,result);
+        res.send(html);
+    });
+});
+uRouter.get('/delete/:uid',dm.isLoggedIn,(req,res)=>{
+    let uid = req.session.uid
+    dm.getUserInfo(uid, ()=>{
+        dm.deleteUser(uid,()=>{
+            let html= view.alertMsg('아이디가 삭제되었습니다. 이용해주셔서 감사합니다.',('/login')); 
+            res.send(html);
+        });
+    });
 });
 uRouter.get('/update/:uid',dm.isLoggedIn,(req,res)=>{
     let uid = req.session.uid
@@ -106,15 +141,6 @@ uRouter.post('/update',dm.isLoggedIn,(req,res)=>{
         res.send(html);
     } 
 })
-uRouter.get('/delete/:uid',dm.isLoggedIn,(req,res)=>{
-    let uid = req.session.uid
-    dm.getUserInfo(uid, ()=>{
-        dm.deleteUser(uid,()=>{
-            let html= view.alertMsg('아이디가 삭제되었습니다. 이용해주셔서 감사합니다.',('/login')); 
-            res.send(html);
-        })
-    })
-});
 
 
 module.exports = uRouter;
