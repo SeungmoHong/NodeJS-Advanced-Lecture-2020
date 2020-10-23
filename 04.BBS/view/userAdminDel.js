@@ -10,7 +10,7 @@ module.exports.userAdminDeleteForm = function (uname,result) {
             <div class="card">
             <div class="card-body">
               <h4 class="card-title">${result.uname} 계정을 삭제하시겠습니까?</h4>
-              <a href=/user/admindelete/${result.uid}" class="card-link">삭제하기</a>
+              <a href=/user/admindelete/${result.uid} class="card-link">삭제하기</a>
               <a href="/user/list/1" class="card-link">취소</a>
             </div>
             </div> 

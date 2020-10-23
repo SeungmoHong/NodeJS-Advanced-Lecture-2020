@@ -73,7 +73,7 @@ module.exports = {
     
     insertUid:     function(params,callback){
         let conn = this.getConnection();
-        let sql = `INSERT INTO users(uid,tel,email,pwd,uname) values(?,?,?,?,?);`;
+        let sql = `INSERT INTO users(uid,tel,email,pwd,uname,photo) values(?,?,?,?,?,?);`;
         conn.query(sql, params, function(error, fields) {
             if (error)
                 console.log(error);
