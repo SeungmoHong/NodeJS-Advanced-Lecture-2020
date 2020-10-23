@@ -17,6 +17,9 @@ module.exports.usersImfoForm = function (uname,result) {
                 <tr>
                     <td>사용자 아이디:</td>
                     <td>${result.uid}</td>
+                    <td rowspan="6">
+                        <img src="${result.photo}" style="width:150px">
+                    </td>
                 </tr>
                 <tr>
                     <td>사용자 이름:</td>

@@ -12,6 +12,9 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
         tableRow += `<tr>
                         <td>${row.uid}</td>
                         <td>${row.uname}</td>
+                        <td>
+                        <img style="margin-left: 30px;" src="=${row.photo}" width="150">
+                        </td>
                         <td>${row.tel}</td>
                         <td>${row.email}</td>
                         <td>
@@ -51,6 +54,7 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
                 <tr>
                     <th>아이디</th>
                     <th>이름</th>
+                    <th>사진</th>
                     <th>전화번호</th>
                     <th>이메일</th>
                     <th>액션</th>

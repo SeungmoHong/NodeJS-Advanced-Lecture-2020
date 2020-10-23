@@ -1,5 +1,7 @@
 package-lock.json
+upload/
 tmp/
+04.bbs./
 sessions/
 fontawesome-free-5.15.1-web/
 mysql.json

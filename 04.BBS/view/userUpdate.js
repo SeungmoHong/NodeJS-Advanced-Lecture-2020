@@ -18,7 +18,7 @@ module.exports.userUpdateForm = function (uname, result) {
         </div>
         <div class="col-3"></div>
         <div class="col-6">
-            <form action="/user/update" method="post">
+            <form action="/user/update" method="post" enctype="multipart/form-data">
                 <table class="table table-borderless">
                     <tr>
                         <td><label for="uname">이름</label></td>
@@ -41,6 +41,15 @@ module.exports.userUpdateForm = function (uname, result) {
                         <td><input type="password" name="pwd2" id="pwd2"></td>
                     </tr>
                     <tr>
+                        <td><label for="photo">사진</label></td>
+                            <td>
+                                <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input" id="photo" name="photo">
+                                <label class="custom-file-label" for="photo">업로드할 사진 파일 선택</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2" style="text-align: center;">
                             <input class="btn btn-primary" type="submit" value="확인">
                             <input class="btn btn-secondary" type="reset" onclick="location.href='/user/list/1'" value="취소">
@@ -52,6 +61,12 @@ module.exports.userUpdateForm = function (uname, result) {
         <div class="col-3"></div>
     </div>
 </div>
+<script>
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
             
         ${template.footer()}
     `;

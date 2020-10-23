@@ -26,7 +26,7 @@ uRouter.get('/list/:page',dm.isLoggedIn, (req, res) => {
             let endPage = Math.ceil(page/10)*10;
             endPage = (endPage > totalPage) ? totalPage : endPage;
             dm.getAllusers(offset,rows => {
-                const view = require('./view/usersBbs');
+                const view = require('./view/userlist');
                 let html = view.usersForm(req.session.uname, rows, page, startPage, endPage, totalPage);
                 res.send(html); 
             });
@@ -54,7 +54,7 @@ uRouter.post('/register',upload.single('photo'), (req, res) => {
     let pwd = req.body.pwd;
     let pwd2 = req.body.pwd2;
     let uname = req.body.uname;
-    let photo = (req.file) ? `/upload/${req.file.filename}` : '/upload/blank.png';
+    let photo = req.file ? `/upload/${req.file.filename}` : '/upload/blank.png';
     console.log(photo);
     if(uid.length>2){
         if(pwd.length>3){
@@ -130,9 +130,11 @@ uRouter.post('/update',dm.isLoggedIn,(req,res)=>{
     let email = req.body.email
     let pwd = req.body.pwd;
     let pwd2 = req.body.pwd2;
+    let photo = req.file ? `/upload/${req.file.filename}` : '/upload/blank.png';
+    console.log(photo);
     if (pwd === pwd2){      // 패스워드와 패스워드 확인이 일치
         let pwdHash = dm.generateHash(pwd);
-        let params = [uname,tel,email,pwdHash,uid];
+        let params = [uname,tel,email,pwdHash,photo,uid];
         dm.updateUser(params, ()=>{
             let html= view.alertMsg('회원정보 수정이 완료되었습니다.',('/user/list/1'));
         res.send(html);

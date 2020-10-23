@@ -221,7 +221,7 @@ module.exports = {
         conn.end();
     },
     updateUser:     function(params,callback){
-        let sql = `update users set uname=?, tel=?, email=?, pwd=? where uid=?;`;
+        let sql = `update users set uname=?, tel=?, email=?, pwd=?, photo=? where uid=?;`;
         let conn = this.getConnection();
         conn.query(sql, params, function(error, fields) {
             if (error)

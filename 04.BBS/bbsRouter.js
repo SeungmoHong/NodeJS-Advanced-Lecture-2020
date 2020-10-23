@@ -16,7 +16,7 @@ bRouter.get('/list/:page',dm.isLoggedIn, (req, res) => {
         let endPage = Math.ceil(page/10)*10;
         endPage = (endPage > totalPage) ? totalPage : endPage;
         dm.getAllLists(offset, rows=>{
-            const view = require('./view/mainBbs');
+            const view = require('./view/bbsMain');
             let html = view.bbsForm(req.session.uname,rows, page, startPage, endPage, totalPage);
             res.send(html); 
         });
@@ -35,7 +35,7 @@ bRouter.get('/:bid',dm.isLoggedIn, (req, res) => {
     });
 });
 bRouter.get('/new/insert',dm.isLoggedIn, (req, res) => {
-    const view = require('./view/insertBbs');
+    const view = require('./view/bbsInsert');
     let html = view.insertBbs(req.session.uname);
     res.send(html);
 });
@@ -101,7 +101,7 @@ bRouter.post('/update',dm.isLoggedIn, (req,res)=>{
 bRouter.post('/search',dm.isLoggedIn,(req,res)=>{
     let searched ='%'+req.body.searched+'%';
     dm.searchTitle(searched,rows => {
-        const view = require('./view/searchBbs');
+        const view = require('./view/bbsSerch');
         let html = view.searchForm(req.session.uname,rows);
         res.send(html);
     })

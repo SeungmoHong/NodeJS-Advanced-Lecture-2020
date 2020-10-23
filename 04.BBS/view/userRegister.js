@@ -11,7 +11,7 @@ module.exports.register = function () {
         </div>
         <div class="col-3"></div>
         <div class="col-6">
-            <form action="/user/register" method="post">
+            <form action="/user/register" method="post" enctype="multipart/form-data">
                 <table class="table table-borderless">
                     <tr>
                         <td><label for="uid">사용자 ID</label></td>
@@ -44,8 +44,8 @@ module.exports.register = function () {
                                 <input type="file" class="custom-file-input" id="photo" name="photo">
                                 <label class="custom-file-label" for="photo">업로드할 사진 파일 선택</label>
                             </div>
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <input class="btn btn-primary" type="submit" value="확인">
