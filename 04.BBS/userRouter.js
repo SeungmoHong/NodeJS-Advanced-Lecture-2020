@@ -1,7 +1,11 @@
 const express = require('express');
 const view = require('./view/alertMsg');
 const dm = require('./db/dbmodule');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const multer = require('multer');
+
 
 const uRouter = express.Router();
 const upload = multer({
@@ -84,6 +88,8 @@ uRouter.post('/register',upload.single('photo'), (req, res) => {
             res.send(html);
     }
 });
+
+
 uRouter.get('/adminDel/:uid',dm.isLoggedIn,(req,res)=>{
     let uid = req.params.uid;
     dm.getUserInfo(uid, (result)=>{
@@ -130,11 +136,9 @@ uRouter.post('/update',dm.isLoggedIn,(req,res)=>{
     let email = req.body.email
     let pwd = req.body.pwd;
     let pwd2 = req.body.pwd2;
-    let photo = req.file ? `/upload/${req.file.filename}` : '/upload/blank.png';
-    console.log(photo);
     if (pwd === pwd2){      // 패스워드와 패스워드 확인이 일치
         let pwdHash = dm.generateHash(pwd);
-        let params = [uname,tel,email,pwdHash,photo,uid];
+        let params = [uname,tel,email,pwdHash,uid];
         dm.updateUser(params, ()=>{
             let html= view.alertMsg('회원정보 수정이 완료되었습니다.',('/user/list/1'));
         res.send(html);

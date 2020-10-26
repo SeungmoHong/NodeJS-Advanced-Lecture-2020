@@ -34,6 +34,19 @@ bRouter.get('/:bid',dm.isLoggedIn, (req, res) => {
         });
     });
 });
+bRouter.post('/reply',dm.isLoggedIn, (req, res) => {
+    let bid = parseInt(req.body.bid);
+    let uid = req.session.uid;
+    let rep = req.body.rep;
+    let isMine = (uid === req.body.uid) ? 1 : 0;
+    let params = [bid,uid,rep,isMine];
+    dm.insertReply(params, ()=>{
+        dm.increaseReplyCount(bid, () => {
+            res.redirect(`/bbs/${bid}`);
+        });
+    console.log(params);
+    });
+});
 bRouter.get('/new/insert',dm.isLoggedIn, (req, res) => {
     const view = require('./view/bbsInsert');
     let html = view.insertBbs(req.session.uname);
@@ -49,17 +62,12 @@ bRouter.post('/new/insert', (req, res) => {
     console.log(params);
     });
 });
-bRouter.post('/reply',dm.isLoggedIn, (req, res) => {
-    let bid = parseInt(req.body.bid);
-    let uid = req.session.uid;
-    let rep = req.body.rep;
-    let isMine = (uid === req.body.uid) ? 1 : 0;
-    let params = [bid,uid,rep,isMine];
-    dm.insertReply(params, ()=>{
-        dm.increaseReplyCount(bid, () => {
-            res.redirect(`/bbs/${bid}`);
-        });
-    console.log(params);
+bRouter.get('/deleteform/:bid/:uid',dm.isLoggedIn,(req,res)=>{
+    let bid = req.params.bid;
+    dm.getBbs(bid, (result)=>{
+        const view = require('./view/bbsDel');
+        let html = view.bbsDeleteForm(req.session.uname,result);
+        res.send(html);
     });
 });
 bRouter.get('/delete/:bid/:uid',dm.isLoggedIn,(req,res)=>{
@@ -101,7 +109,7 @@ bRouter.post('/update',dm.isLoggedIn, (req,res)=>{
 bRouter.post('/search',dm.isLoggedIn,(req,res)=>{
     let searched ='%'+req.body.searched+'%';
     dm.searchTitle(searched,rows => {
-        const view = require('./view/bbsSerch');
+        const view = require('./view/bbsSearch');
         let html = view.searchForm(req.session.uname,rows);
         res.send(html);
     })

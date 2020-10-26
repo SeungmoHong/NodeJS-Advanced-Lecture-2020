@@ -133,10 +133,13 @@ module.exports = {
     },
     getAllusers:    function(offset,callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * FROM users where isDeleted =0 
-        ORDER BY regDate DESC
-	    limit 10 offset ?`;
-        conn.query(sql,offset, (error, rows, fields) => {
+        let sql = `SELECT uid, uname, photo, tel, email,
+        DATE_FORMAT(regDate, '%Y-%m-%d') AS regDate
+        FROM users
+        WHERE isDeleted=0
+        ORDER BY uname
+      `;
+        conn.query(sql, (error, rows, fields) => {
             if (error)
                 console.log(error);
             callback(rows);
@@ -156,10 +159,10 @@ module.exports = {
     getBbs:    function(bid, callback){
         let sql=`select * from bbs where bid=?;`;
         let conn = this.getConnection();
-        conn.query(sql, bid, function(error, rows, fields) {
+        conn.query(sql, bid, function(error, results, fields) {
             if (error)
                 console.log(error);
-            callback(rows[0]);      //주의 array
+            callback(results[0]);      //주의 array
         });
         conn.end();
     },
@@ -221,7 +224,7 @@ module.exports = {
         conn.end();
     },
     updateUser:     function(params,callback){
-        let sql = `update users set uname=?, tel=?, email=?, pwd=?, photo=? where uid=?;`;
+        let sql = `update users set uname=?, tel=?, email=?, pwd=? where uid=?;`;
         let conn = this.getConnection();
         conn.query(sql, params, function(error, fields) {
             if (error)

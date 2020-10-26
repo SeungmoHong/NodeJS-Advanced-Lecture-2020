@@ -2,18 +2,24 @@ const template = require('./template');
 
 module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, totalPage) {
     let tableRow = '';
+    
+    
     for (let row of rows) {
+        
         if(String(row.tel)==='null'||String(row.tel)===''){
             row.tel = '등록되지 않음'
         }
         if(String(row.email)==='null'||String(row.email)===''){
             row.email = '등록되지 않음'
         }
+        if(String(row.photo)==='null'){
+            row.photo = '/upload/1.png'
+        }
         tableRow += `<tr>
                         <td>${row.uid}</td>
                         <td>${row.uname}</td>
                         <td>
-                        <img style="margin-left: 30px;" src="=${row.photo}" width="150">
+                        <img style="margin-left: 30px;" src="${row.photo}" width="150">
                         </td>
                         <td>${row.tel}</td>
                         <td>${row.email}</td>

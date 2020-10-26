@@ -18,7 +18,7 @@ module.exports.userUpdateForm = function (uname, result) {
         </div>
         <div class="col-3"></div>
         <div class="col-6">
-            <form action="/user/update" method="post" enctype="multipart/form-data">
+            <form action="/user/update" method="post" >
                 <table class="table table-borderless">
                     <tr>
                         <td><label for="uname">이름</label></td>
@@ -40,15 +40,7 @@ module.exports.userUpdateForm = function (uname, result) {
                         <td><label for="pwd2">패스워드 확인</label></td>
                         <td><input type="password" name="pwd2" id="pwd2"></td>
                     </tr>
-                    <tr>
-                        <td><label for="photo">사진</label></td>
-                            <td>
-                                <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="photo" name="photo">
-                                <label class="custom-file-label" for="photo">업로드할 사진 파일 선택</label>
-                            </div>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <input class="btn btn-primary" type="submit" value="확인">

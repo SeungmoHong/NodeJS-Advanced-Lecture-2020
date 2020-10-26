@@ -7,6 +7,10 @@ module.exports.usersImfoForm = function (uname,result) {
     if(String(result.email)===''||String(result.email)==='null'){
         result.email = '등록되지 않음'
     }
+    if(String(result.photo)==='null'){
+        result.photo = '/upload/1.png'
+    }
+    
 	return `
         ${template.header()}
         ${template.nav(uname)}

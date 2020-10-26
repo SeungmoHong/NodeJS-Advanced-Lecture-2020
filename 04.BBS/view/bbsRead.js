@@ -57,7 +57,7 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             <div align="right">
             <h4>
             <a href="/bbs/update/${result.bid}/${result.uid}"><i class="fas fa-edit"></i></a> 
-            <a href="/bbs/delete/${result.bid}/${result.uid}"><i class="fas fa-trash-alt"></i></a>
+            <a href="/bbs/deleteform/${result.bid}/${result.uid}"><i class="fas fa-trash-alt"></i></a>
             </h4>
             </div>
             <hr>
