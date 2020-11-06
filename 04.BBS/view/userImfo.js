@@ -22,7 +22,7 @@ module.exports.usersImfoForm = function (uname,result) {
                     <td>사용자 아이디:</td>
                     <td>${result.uid}</td>
                     <td rowspan="6">
-                        <img src="${result.photo}" style="width:150px">
+                        <img src="${result.photo}" height="300" width="200">
                     </td>
                 </tr>
                 <tr>
@@ -47,6 +47,12 @@ module.exports.usersImfoForm = function (uname,result) {
                     <td>계정 탈퇴하기</td>
                     <td>
                     <a href="/user/userDelete/${result.uid}">탈퇴하기</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>사용자 정보수정:</td>
+                    <td>
+                        <a href="/user/picUpdate/${result.uid}">사진수정하기</a>
                     </td>
                 </tr>
             </table>

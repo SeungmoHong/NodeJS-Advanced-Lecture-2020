@@ -147,7 +147,24 @@ uRouter.post('/update',dm.isLoggedIn,(req,res)=>{
         let html= view.alertMsg('패스워드가 일치하지 않습니다.',(`/user/update/${uid}`));
         res.send(html);
     } 
-})
+});
+uRouter.get('/picUpdate/:uid',dm.isLoggedIn,(req,res)=>{
+    let uid = req.session.uid
+    dm.getUserInfo(uid, (result)=>{
+        const view = require('./view/userPicUpdate');
+        let html = view.userPicUpdateForm(req.session.uname,result);
+        res.send(html);
+    })
+});
+uRouter.post('/updatePic',dm.isLoggedIn,upload.single('photo'),(req,res)=>{
+    let uid = req.session.uid;
+    let photo = req.file ? `/upload/${req.file.filename}` : '/upload/blank.png';
+    let params = [photo, uid];
+    dm.updateUserPic(params, ()=>{
+        let html= view.alertMsg('회원정보 수정이 완료되었습니다.',('/user/list/1'));
+        res.send(html);
+    })
+});
 
 
 module.exports = uRouter;

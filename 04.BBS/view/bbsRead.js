@@ -51,7 +51,7 @@ module.exports.bbsReadForm = function (uname, result, replies) {
             </table>
             <table class="table table-bordered">
             <td>
-            <p>${result.content}</p>
+            <p>${result.content.replace(/\n/g, '<br>')}</p>
             </td>
             </table>
             <div align="right">

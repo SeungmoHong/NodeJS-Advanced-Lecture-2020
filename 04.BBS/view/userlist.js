@@ -19,7 +19,7 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
                         <td>${row.uid}</td>
                         <td>${row.uname}</td>
                         <td>
-                        <img style="margin-left: 30px;" src="${row.photo}" width="150">
+                        <img style="margin-left: 30px;" src="${row.photo}" height="150" width="150">
                         </td>
                         <td>${row.tel}</td>
                         <td>${row.email}</td>
@@ -29,26 +29,7 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
                         </td>
                     </tr>`;
     }
-    let leftPage = (pageNo > 10) ? `/user/list/${Math.floor(pageNo/10) * 10}` : '#';
-    let pages = `<li class="page-item">
-                    <a class="page-link active" href="${leftPage}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span></a>
-                </li>`;
-    for (let page = startPage; page <= endPage; page++) {
-        if (page === pageNo)
-            pages += `<li class="page-item active" aria-current="page">
-                        <span class="page-link">
-                            ${page}<span class="sr-only">(current)</span>
-                        </span>
-                    </li>`;
-        else
-            pages += `<li class="page-item"><a class="page-link" href="/user/list/${page}">${page}</a></li>`;
-    }
-    let rightPage = (endPage < totalPage) ? `/user/list/${Math.ceil(pageNo/10)*10 + 1}` : '#';
-    pages += `<li class="page-item">
-                <a class="page-link" href="${rightPage}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span></a>
-            </li>`;
+
 	return `
         ${template.header()}
         ${template.nav(uname)}
@@ -68,9 +49,7 @@ module.exports.usersForm = function (uname,rows,pageNo, startPage, endPage, tota
                 </thead>    
                     ${tableRow}
             </table>
-            <ul class="pagination justify-content-center">
-            ${pages}
-            </ul>
+
             <div class="row mb-5" ></div>
 		${template.footer()}
     `;

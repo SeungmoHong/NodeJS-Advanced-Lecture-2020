@@ -233,6 +233,16 @@ module.exports = {
         });
         conn.end();
     },
+    updateUserPic:     function(params,callback){
+        let sql = `update users set photo= ? where uid= ?;`;
+        let conn = this.getConnection();
+        conn.query(sql, params, function(error, fields) {
+            if (error)
+                console.log(error);
+            callback();
+        });
+        conn.end();
+    },
     deleteUser:     function(uid,callback){
         let sql = `update users set isDeleted=1 where uid like ?;`;
         let conn = this.getConnection();
